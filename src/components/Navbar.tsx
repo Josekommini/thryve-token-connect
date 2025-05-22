@@ -2,9 +2,11 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleNavLinkClick = (sectionId: string) => {
     setIsOpen(false); // Close mobile menu when clicking a link
@@ -15,23 +17,23 @@ const Navbar = () => {
     }
   };
 
+  const handleLoginClick = () => {
+    navigate('/auth');
+  };
+
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
       <div className="container-custom flex items-center justify-between h-16">
         {/* Logo */}
         <div className="flex-shrink-0">
-          <a 
-            href="#hero" 
+          <Link 
+            to="/"
             className="flex items-center"
-            onClick={(e) => {
-              e.preventDefault();
-              handleNavLinkClick('hero');
-            }}
           >
             <h1 className="text-2xl font-bold text-thryve-blue">
               Thryve<span className="text-thryve-teal">.</span>
             </h1>
-          </a>
+          </Link>
         </div>
 
         {/* Desktop Navigation */}
@@ -82,10 +84,17 @@ const Navbar = () => {
 
         {/* CTA Buttons */}
         <div className="hidden md:flex items-center space-x-4">
-          <Button variant="outline" className="border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white">
+          <Button 
+            variant="outline" 
+            className="border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white"
+            onClick={handleLoginClick}
+          >
             Login
           </Button>
-          <Button className="bg-thryve-teal hover:bg-thryve-teal/90 text-white">
+          <Button 
+            className="bg-thryve-teal hover:bg-thryve-teal/90 text-white"
+            onClick={handleLoginClick}
+          >
             Get Started
           </Button>
         </div>
@@ -150,7 +159,10 @@ const Navbar = () => {
           <div className="pt-4 pb-3 border-t border-gray-200">
             <div className="flex items-center px-5">
               <div className="flex-shrink-0">
-                <Button className="w-full bg-thryve-teal hover:bg-thryve-teal/90 text-white">
+                <Button 
+                  className="w-full bg-thryve-teal hover:bg-thryve-teal/90 text-white"
+                  onClick={handleLoginClick}
+                >
                   Get Started
                 </Button>
               </div>
