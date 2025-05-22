@@ -4,8 +4,15 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 
 const HeroSection = () => {
+  const handleExploreServices = () => {
+    const servicesSection = document.getElementById('services');
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <div className="relative overflow-hidden bg-gradient-to-br from-thryve-darkblue to-thryve-blue">
+    <div id="hero" className="relative overflow-hidden bg-gradient-to-br from-thryve-darkblue to-thryve-blue">
       {/* Abstract geometric shapes for background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-[10%] left-[5%] w-64 h-64 bg-thryve-purple opacity-5 rounded-full blur-3xl"></div>
@@ -24,10 +31,24 @@ const HeroSection = () => {
               A cutting-edge professional service platform bridging traditional business solutions with Web3 innovation.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Button size="lg" className="bg-thryve-teal hover:bg-thryve-teal/90 text-white">
+              <Button 
+                size="lg" 
+                className="bg-thryve-teal hover:bg-thryve-teal/90 text-white"
+                onClick={handleExploreServices}
+              >
                 Explore Services
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-white text-white hover:bg-white/10"
+                onClick={() => {
+                  const aboutSection = document.getElementById('portfolio');
+                  if (aboutSection) {
+                    aboutSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              >
                 Learn More <ArrowRight size={16} className="ml-2" />
               </Button>
             </div>

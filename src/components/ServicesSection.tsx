@@ -37,6 +37,13 @@ const services = [
 ];
 
 const ServicesSection = () => {
+  const handleContactClick = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="services" className="section-padding bg-gray-50">
       <div className="container-custom">
@@ -70,8 +77,11 @@ const ServicesSection = () => {
                   </li>
                 ))}
               </ul>
-              <Button variant="ghost" className="text-thryve-teal group-hover:underline p-0 h-auto">
-                Learn more <ArrowUpRight size={16} className="ml-2 inline-block" />
+              <Button 
+                variant="ghost" 
+                className="text-thryve-teal group-hover:underline p-0 h-auto flex items-center"
+              >
+                Learn more <ArrowUpRight size={16} className="ml-2" />
               </Button>
             </div>
           ))}
@@ -84,7 +94,11 @@ const ServicesSection = () => {
               <h3 className="text-2xl md:text-3xl font-bold mb-2">Ready to elevate your business?</h3>
               <p className="text-gray-200">Let's discuss how our services can help you achieve your goals.</p>
             </div>
-            <Button size="lg" className="bg-thryve-teal hover:bg-thryve-teal/90 text-white whitespace-nowrap">
+            <Button 
+              size="lg" 
+              className="bg-thryve-teal hover:bg-thryve-teal/90 text-white whitespace-nowrap"
+              onClick={handleContactClick}
+            >
               Schedule a Consultation
             </Button>
           </div>

@@ -64,7 +64,10 @@ const PortfolioSection = () => {
               <div className="p-6">
                 <h4 className="text-xl font-bold text-thryve-blue mb-2">{project.title}</h4>
                 <p className="text-gray-600 mb-4">{project.description}</p>
-                <Button variant="ghost" className="text-thryve-teal hover:text-thryve-teal/80 p-0 h-auto">
+                <Button 
+                  variant="ghost" 
+                  className="text-thryve-teal hover:text-thryve-teal/80 p-0 h-auto flex items-center"
+                >
                   View Case Study
                 </Button>
               </div>
@@ -74,7 +77,10 @@ const PortfolioSection = () => {
 
         {/* View more button */}
         <div className="flex justify-center mt-12">
-          <Button variant="outline" className="border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white">
+          <Button 
+            variant="outline" 
+            className="border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white"
+          >
             View More Projects
           </Button>
         </div>
