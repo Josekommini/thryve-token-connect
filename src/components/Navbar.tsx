@@ -3,10 +3,12 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth, UserButton, SignOutButton } from '@clerk/clerk-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const { isSignedIn } = useAuth();
 
   const handleNavLinkClick = (sectionId: string) => {
     setIsOpen(false); // Close mobile menu when clicking a link
@@ -84,19 +86,33 @@ const Navbar = () => {
 
         {/* CTA Buttons */}
         <div className="hidden md:flex items-center space-x-4">
-          <Button 
-            variant="outline" 
-            className="border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white"
-            onClick={handleLoginClick}
-          >
-            Login
-          </Button>
-          <Button 
-            className="bg-thryve-teal hover:bg-thryve-teal/90 text-white"
-            onClick={handleLoginClick}
-          >
-            Get Started
-          </Button>
+          {isSignedIn ? (
+            <div className="flex items-center space-x-4">
+              <UserButton 
+                appearance={{
+                  elements: {
+                    avatarBox: "w-8 h-8"
+                  }
+                }}
+              />
+            </div>
+          ) : (
+            <>
+              <Button 
+                variant="outline" 
+                className="border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white"
+                onClick={handleLoginClick}
+              >
+                Login
+              </Button>
+              <Button 
+                className="bg-thryve-teal hover:bg-thryve-teal/90 text-white"
+                onClick={handleLoginClick}
+              >
+                Get Started
+              </Button>
+            </>
+          )}
         </div>
 
         {/* Mobile menu button */}
@@ -159,12 +175,18 @@ const Navbar = () => {
           <div className="pt-4 pb-3 border-t border-gray-200">
             <div className="flex items-center px-5">
               <div className="flex-shrink-0">
-                <Button 
-                  className="w-full bg-thryve-teal hover:bg-thryve-teal/90 text-white"
-                  onClick={handleLoginClick}
-                >
-                  Get Started
-                </Button>
+                {isSignedIn ? (
+                  <div className="flex items-center space-x-4">
+                    <UserButton />
+                  </div>
+                ) : (
+                  <Button 
+                    className="w-full bg-thryve-teal hover:bg-thryve-teal/90 text-white"
+                    onClick={handleLoginClick}
+                  >
+                    Get Started
+                  </Button>
+                )}
               </div>
             </div>
           </div>
