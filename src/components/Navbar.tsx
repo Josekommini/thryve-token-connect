@@ -2,23 +2,34 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const isDashboard = location.pathname === '/dashboard';
 
   const handleNavLinkClick = (sectionId: string) => {
-    setIsOpen(false); // Close mobile menu when clicking a link
+    setIsOpen(false);
     
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+    if (isDashboard) {
+      // If on dashboard, navigate to home first then scroll
+      navigate('/', { state: { scrollTo: sectionId } });
+    } else {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
   const handleLoginClick = () => {
     navigate('/auth');
+  };
+
+  const handleDashboardClick = () => {
+    navigate('/dashboard');
   };
 
   return (
@@ -39,64 +50,87 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <div className="hidden md:block">
           <div className="ml-10 flex items-center space-x-8">
-            <a 
-              href="#services" 
-              className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavLinkClick('services');
-              }}
-            >
-              Services
-            </a>
-            <a 
-              href="#portfolio" 
-              className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavLinkClick('portfolio');
-              }}
-            >
-              Portfolio
-            </a>
-            <a 
-              href="#token-system" 
-              className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavLinkClick('token-system');
-              }}
-            >
-              Token System
-            </a>
-            <a 
-              href="#contact" 
-              className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavLinkClick('contact');
-              }}
-            >
-              Contact
-            </a>
+            {isDashboard ? (
+              <Link 
+                to="/" 
+                className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
+              >
+                Home
+              </Link>
+            ) : (
+              <>
+                <a 
+                  href="#services" 
+                  className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavLinkClick('services');
+                  }}
+                >
+                  Services
+                </a>
+                <a 
+                  href="#portfolio" 
+                  className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavLinkClick('portfolio');
+                  }}
+                >
+                  Portfolio
+                </a>
+                <a 
+                  href="#token-system" 
+                  className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavLinkClick('token-system');
+                  }}
+                >
+                  Token System
+                </a>
+                <a 
+                  href="#contact" 
+                  className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavLinkClick('contact');
+                  }}
+                >
+                  Contact
+                </a>
+              </>
+            )}
           </div>
         </div>
 
         {/* CTA Buttons */}
         <div className="hidden md:flex items-center space-x-4">
-          <Button 
-            variant="outline" 
-            className="border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white"
-            onClick={handleLoginClick}
-          >
-            Login
-          </Button>
-          <Button 
-            className="bg-thryve-teal hover:bg-thryve-teal/90 text-white"
-            onClick={handleLoginClick}
-          >
-            Get Started
-          </Button>
+          {isDashboard ? (
+            <Button 
+              variant="outline" 
+              className="border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white"
+              onClick={handleLoginClick}
+            >
+              Logout
+            </Button>
+          ) : (
+            <>
+              <Button 
+                variant="outline" 
+                className="border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white"
+                onClick={handleLoginClick}
+              >
+                Login
+              </Button>
+              <Button 
+                className="bg-thryve-teal hover:bg-thryve-teal/90 text-white"
+                onClick={handleDashboardClick}
+              >
+                Dashboard
+              </Button>
+            </>
+          )}
         </div>
 
         {/* Mobile menu button */}
@@ -115,55 +149,67 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden bg-white border-b border-gray-100">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <a
-              href="#services"
-              className="block px-3 py-2 text-base font-medium text-thryve-blue hover:bg-gray-50 rounded-md"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavLinkClick('services');
-              }}
-            >
-              Services
-            </a>
-            <a
-              href="#portfolio"
-              className="block px-3 py-2 text-base font-medium text-thryve-blue hover:bg-gray-50 rounded-md"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavLinkClick('portfolio');
-              }}
-            >
-              Portfolio
-            </a>
-            <a
-              href="#token-system"
-              className="block px-3 py-2 text-base font-medium text-thryve-blue hover:bg-gray-50 rounded-md"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavLinkClick('token-system');
-              }}
-            >
-              Token System
-            </a>
-            <a
-              href="#contact"
-              className="block px-3 py-2 text-base font-medium text-thryve-blue hover:bg-gray-50 rounded-md"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavLinkClick('contact');
-              }}
-            >
-              Contact
-            </a>
+            {isDashboard ? (
+              <Link
+                to="/"
+                className="block px-3 py-2 text-base font-medium text-thryve-blue hover:bg-gray-50 rounded-md"
+                onClick={() => setIsOpen(false)}
+              >
+                Home
+              </Link>
+            ) : (
+              <>
+                <a
+                  href="#services"
+                  className="block px-3 py-2 text-base font-medium text-thryve-blue hover:bg-gray-50 rounded-md"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavLinkClick('services');
+                  }}
+                >
+                  Services
+                </a>
+                <a
+                  href="#portfolio"
+                  className="block px-3 py-2 text-base font-medium text-thryve-blue hover:bg-gray-50 rounded-md"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavLinkClick('portfolio');
+                  }}
+                >
+                  Portfolio
+                </a>
+                <a
+                  href="#token-system"
+                  className="block px-3 py-2 text-base font-medium text-thryve-blue hover:bg-gray-50 rounded-md"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavLinkClick('token-system');
+                  }}
+                >
+                  Token System
+                </a>
+                <a
+                  href="#contact"
+                  className="block px-3 py-2 text-base font-medium text-thryve-blue hover:bg-gray-50 rounded-md"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavLinkClick('contact');
+                  }}
+                >
+                  Contact
+                </a>
+              </>
+            )}
           </div>
           <div className="pt-4 pb-3 border-t border-gray-200">
             <div className="flex items-center px-5">
               <div className="flex-shrink-0">
                 <Button 
                   className="w-full bg-thryve-teal hover:bg-thryve-teal/90 text-white"
-                  onClick={handleLoginClick}
+                  onClick={isDashboard ? handleLoginClick : handleDashboardClick}
                 >
-                  Get Started
+                  {isDashboard ? 'Logout' : 'Dashboard'}
                 </Button>
               </div>
             </div>

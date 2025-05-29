@@ -30,14 +30,13 @@ const Auth = () => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // Here you would integrate with your auth provider
     console.log("Form submitted:", values, "User type:", userType);
     
     toast.success(`${isLogin ? "Login" : "Registration"} successful!`);
     
-    // Navigate back to home after successful auth
+    // Navigate to dashboard after successful auth
     setTimeout(() => {
-      navigate('/');
+      navigate('/dashboard');
     }, 1500);
   };
 

@@ -15,12 +15,12 @@ const TokenSystem = () => {
       <div className="container-custom">
         {/* Section header */}
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-sm uppercase tracking-wider text-thryve-teal font-semibold mb-3">Web3 Integration</h2>
+          <h2 className="text-sm uppercase tracking-wider text-thryve-teal font-semibold mb-3">Digital Rewards</h2>
           <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Token-Powered Ecosystem
           </h3>
           <p className="text-lg text-gray-200">
-            Leveraging blockchain technology to create a transparent, efficient, and rewarding platform for clients and freelancers.
+            Earn and redeem digital tokens for quality work, client satisfaction, and platform contributions in our rewarding ecosystem.
           </p>
         </div>
 
@@ -32,16 +32,16 @@ const TokenSystem = () => {
             </div>
             <h4 className="text-xl font-bold mb-4">Secure Payments</h4>
             <p className="text-gray-200 mb-6">
-              Smart contract-powered escrow system ensures secure and transparent payment processing for all parties.
+              Digital token system ensures secure and transparent payment processing for all parties with instant transfers.
             </p>
             <ul className="space-y-3">
               <li className="flex items-start">
                 <CheckCircle className="w-5 h-5 text-thryve-teal mr-2 flex-shrink-0 mt-0.5" />
-                <span>Automated escrow releases</span>
+                <span>Instant payment releases</span>
               </li>
               <li className="flex items-start">
                 <CheckCircle className="w-5 h-5 text-thryve-teal mr-2 flex-shrink-0 mt-0.5" />
-                <span>Reduced transaction fees</span>
+                <span>No transaction fees</span>
               </li>
             </ul>
           </div>
@@ -52,16 +52,16 @@ const TokenSystem = () => {
             </div>
             <h4 className="text-xl font-bold mb-4">Verified Reputation</h4>
             <p className="text-gray-200 mb-6">
-              On-chain reputation system provides verifiable proof of skill, experience, and reliability.
+              Digital reputation system provides verifiable proof of skill, experience, and reliability through token rewards.
             </p>
             <ul className="space-y-3">
               <li className="flex items-start">
                 <CheckCircle className="w-5 h-5 text-thryve-purple mr-2 flex-shrink-0 mt-0.5" />
-                <span>Tamper-proof work history</span>
+                <span>Skill-based token rewards</span>
               </li>
               <li className="flex items-start">
                 <CheckCircle className="w-5 h-5 text-thryve-purple mr-2 flex-shrink-0 mt-0.5" />
-                <span>Transparent client feedback</span>
+                <span>Client feedback tokens</span>
               </li>
             </ul>
           </div>
@@ -81,7 +81,7 @@ const TokenSystem = () => {
               </li>
               <li className="flex items-start">
                 <CheckCircle className="w-5 h-5 text-thryve-gold mr-2 flex-shrink-0 mt-0.5" />
-                <span>Community governance rights</span>
+                <span>Milestone achievements</span>
               </li>
             </ul>
           </div>
@@ -98,19 +98,19 @@ const TokenSystem = () => {
               <div className="space-y-4 mb-8">
                 <div className="flex items-center">
                   <div className="w-12 h-1 bg-thryve-teal rounded-full mr-4"></div>
-                  <span>Payments & Transactions</span>
+                  <span>Payments & Rewards</span>
                 </div>
                 <div className="flex items-center">
                   <div className="w-12 h-1 bg-thryve-purple rounded-full mr-4"></div>
-                  <span>Reputation & Credentials</span>
+                  <span>Reputation & Skills</span>
                 </div>
                 <div className="flex items-center">
                   <div className="w-12 h-1 bg-thryve-gold rounded-full mr-4"></div>
-                  <span>Governance & Voting</span>
+                  <span>Achievements & Bonuses</span>
                 </div>
               </div>
               <Button className="bg-thryve-teal hover:bg-thryve-teal/90 text-white">
-                Connect Wallet <ArrowRight size={16} className="ml-2" />
+                Start Earning <ArrowRight size={16} className="ml-2" />
               </Button>
             </div>
             
