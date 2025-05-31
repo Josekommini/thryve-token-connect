@@ -11,6 +11,13 @@ const HeroSection = () => {
     }
   };
 
+  const handleLearnMore = () => {
+    const tokenSection = document.getElementById('token-system');
+    if (tokenSection) {
+      tokenSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div id="hero" className="relative overflow-hidden bg-gradient-to-br from-thryve-darkblue to-thryve-blue">
       {/* Abstract geometric shapes for background */}
@@ -28,7 +35,7 @@ const HeroSection = () => {
               Empowering Your Business To <span className="text-thryve-teal">Thryve</span>
             </h1>
             <p className="text-lg text-gray-200 mb-8 max-w-xl">
-              A cutting-edge professional service platform bridging traditional business solutions with Web3 innovation.
+              A cutting-edge professional service platform bridging traditional business solutions with innovative digital rewards.
             </p>
             <div className="flex flex-wrap gap-4">
               <Button 
@@ -40,14 +47,8 @@ const HeroSection = () => {
               </Button>
               <Button 
                 size="lg" 
-                variant="outline" 
-                className="border-white text-white hover:bg-white/10"
-                onClick={() => {
-                  const aboutSection = document.getElementById('portfolio');
-                  if (aboutSection) {
-                    aboutSection.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
+                className="bg-thryve-purple hover:bg-thryve-purple/90 text-white"
+                onClick={handleLearnMore}
               >
                 Learn More <ArrowRight size={16} className="ml-2" />
               </Button>
