@@ -3,11 +3,14 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from 'sonner';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, signOut, loading } = useAuth();
   const isDashboard = location.pathname === '/dashboard';
 
   const handleNavLinkClick = (sectionId: string) => {
@@ -28,8 +31,22 @@ const Navbar = () => {
     navigate('/auth');
   };
 
+  const handleLogoutClick = async () => {
+    const { error } = await signOut();
+    if (error) {
+      toast.error('Logout failed');
+    } else {
+      toast.success('Logged out successfully');
+      navigate('/');
+    }
+  };
+
   const handleDashboardClick = () => {
-    navigate('/dashboard');
+    if (user) {
+      navigate('/dashboard');
+    } else {
+      navigate('/auth');
+    }
   };
 
   return (
@@ -106,14 +123,26 @@ const Navbar = () => {
 
         {/* CTA Buttons */}
         <div className="hidden md:flex items-center space-x-4">
-          {isDashboard ? (
-            <Button 
-              variant="outline" 
-              className="border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white"
-              onClick={handleLoginClick}
-            >
-              Logout
-            </Button>
+          {user ? (
+            <>
+              {!isDashboard && (
+                <Button 
+                  variant="outline" 
+                  className="border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white"
+                  onClick={handleDashboardClick}
+                >
+                  Dashboard
+                </Button>
+              )}
+              <Button 
+                variant="outline" 
+                className="border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white"
+                onClick={handleLogoutClick}
+                disabled={loading}
+              >
+                Logout
+              </Button>
+            </>
           ) : (
             <>
               <Button 
@@ -127,7 +156,7 @@ const Navbar = () => {
                 className="bg-thryve-teal hover:bg-thryve-teal/90 text-white"
                 onClick={handleDashboardClick}
               >
-                Dashboard
+                Get Started
               </Button>
             </>
           )}
@@ -205,12 +234,33 @@ const Navbar = () => {
           <div className="pt-4 pb-3 border-t border-gray-200">
             <div className="flex items-center px-5">
               <div className="flex-shrink-0">
-                <Button 
-                  className="w-full bg-thryve-teal hover:bg-thryve-teal/90 text-white"
-                  onClick={isDashboard ? handleLoginClick : handleDashboardClick}
-                >
-                  {isDashboard ? 'Logout' : 'Dashboard'}
-                </Button>
+                {user ? (
+                  <div className="space-y-2 w-full">
+                    {!isDashboard && (
+                      <Button 
+                        className="w-full bg-thryve-teal hover:bg-thryve-teal/90 text-white"
+                        onClick={handleDashboardClick}
+                      >
+                        Dashboard
+                      </Button>
+                    )}
+                    <Button 
+                      variant="outline"
+                      className="w-full border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white"
+                      onClick={handleLogoutClick}
+                      disabled={loading}
+                    >
+                      Logout
+                    </Button>
+                  </div>
+                ) : (
+                  <Button 
+                    className="w-full bg-thryve-teal hover:bg-thryve-teal/90 text-white"
+                    onClick={handleDashboardClick}
+                  >
+                    Get Started
+                  </Button>
+                )}
               </div>
             </div>
           </div>

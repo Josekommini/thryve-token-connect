@@ -1,15 +1,16 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { toast } from 'sonner';
+import { useAuth } from '@/contexts/AuthContext';
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -19,7 +20,16 @@ const formSchema = z.object({
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [userType, setUserType] = useState("client");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { user, signUp, signIn } = useAuth();
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -29,20 +39,49 @@ const Auth = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log("Form submitted:", values, "User type:", userType);
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setLoading(true);
+    console.log("Form submitted:", values, "User type:", userType, "Is login:", isLogin);
     
-    toast.success(`${isLogin ? "Login" : "Registration"} successful!`);
-    
-    // Navigate to dashboard after successful auth
-    setTimeout(() => {
-      navigate('/dashboard');
-    }, 1500);
+    try {
+      if (isLogin) {
+        const { error } = await signIn(values.email, values.password);
+        
+        if (error) {
+          console.error('Login error:', error);
+          toast.error(error.message || 'Login failed');
+        } else {
+          toast.success('Login successful!');
+          navigate('/dashboard');
+        }
+      } else {
+        const { error } = await signUp(values.email, values.password, {
+          user_type: userType
+        });
+        
+        if (error) {
+          console.error('Signup error:', error);
+          toast.error(error.message || 'Registration failed');
+        } else {
+          toast.success('Registration successful! Please check your email to verify your account.');
+        }
+      }
+    } catch (error: any) {
+      console.error('Auth error:', error);
+      toast.error('An unexpected error occurred');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const toggleAuthMode = () => {
     setIsLogin(!isLogin);
+    form.reset();
   };
+
+  if (user) {
+    return null; // Will redirect via useEffect
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-background to-secondary/10 p-4">
@@ -56,21 +95,23 @@ const Auth = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2 text-center">
-            <p className="text-sm font-medium">I am a...</p>
-            <ToggleGroup 
-              type="single" 
-              value={userType} 
-              onValueChange={(value) => {
-                if (value) setUserType(value);
-              }}
-              className="justify-center"
-            >
-              <ToggleGroupItem value="client" className="px-4">Client</ToggleGroupItem>
-              <ToggleGroupItem value="freelancer" className="px-4">Freelancer</ToggleGroupItem>
-              <ToggleGroupItem value="employee" className="px-4">Employee</ToggleGroupItem>
-            </ToggleGroup>
-          </div>
+          {!isLogin && (
+            <div className="space-y-2 text-center">
+              <p className="text-sm font-medium">I am a...</p>
+              <ToggleGroup 
+                type="single" 
+                value={userType} 
+                onValueChange={(value) => {
+                  if (value) setUserType(value);
+                }}
+                className="justify-center"
+              >
+                <ToggleGroupItem value="client" className="px-4">Client</ToggleGroupItem>
+                <ToggleGroupItem value="freelancer" className="px-4">Freelancer</ToggleGroupItem>
+                <ToggleGroupItem value="employee" className="px-4">Employee</ToggleGroupItem>
+              </ToggleGroup>
+            </div>
+          )}
           
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -100,8 +141,12 @@ const Auth = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full bg-thryve-teal hover:bg-thryve-teal/90">
-                {isLogin ? "Login" : "Register"}
+              <Button 
+                type="submit" 
+                className="w-full bg-thryve-teal hover:bg-thryve-teal/90"
+                disabled={loading}
+              >
+                {loading ? "Loading..." : (isLogin ? "Login" : "Register")}
               </Button>
             </form>
           </Form>
@@ -112,6 +157,7 @@ const Auth = () => {
             <button
               onClick={toggleAuthMode}
               className="underline text-thryve-teal hover:text-thryve-teal/90"
+              disabled={loading}
             >
               {isLogin ? "Register" : "Login"}
             </button>
