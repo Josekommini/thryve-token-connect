@@ -12,12 +12,13 @@ const Navbar = () => {
   const location = useLocation();
   const { user, signOut, loading } = useAuth();
   const isDashboard = location.pathname === '/dashboard';
+  const isProjectsPage = location.pathname.startsWith('/projects');
 
   const handleNavLinkClick = (sectionId: string) => {
     setIsOpen(false);
     
-    if (isDashboard) {
-      // If on dashboard, navigate to home first then scroll
+    if (isDashboard || isProjectsPage) {
+      // If on dashboard or projects, navigate to home first then scroll
       navigate('/', { state: { scrollTo: sectionId } });
     } else {
       const section = document.getElementById(sectionId);
@@ -67,13 +68,31 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <div className="hidden md:block">
           <div className="ml-10 flex items-center space-x-8">
-            {isDashboard ? (
-              <Link 
-                to="/" 
-                className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
-              >
-                Home
-              </Link>
+            {isDashboard || isProjectsPage ? (
+              <>
+                <Link 
+                  to="/" 
+                  className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
+                >
+                  Home
+                </Link>
+                {user && (
+                  <>
+                    <Link 
+                      to="/dashboard" 
+                      className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
+                    >
+                      Dashboard
+                    </Link>
+                    <Link 
+                      to="/projects" 
+                      className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
+                    >
+                      Projects
+                    </Link>
+                  </>
+                )}
+              </>
             ) : (
               <>
                 <a 
@@ -116,6 +135,22 @@ const Navbar = () => {
                 >
                   Contact
                 </a>
+                {user && (
+                  <>
+                    <Link 
+                      to="/dashboard" 
+                      className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
+                    >
+                      Dashboard
+                    </Link>
+                    <Link 
+                      to="/projects" 
+                      className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
+                    >
+                      Projects
+                    </Link>
+                  </>
+                )}
               </>
             )}
           </div>
@@ -125,14 +160,23 @@ const Navbar = () => {
         <div className="hidden md:flex items-center space-x-4">
           {user ? (
             <>
-              {!isDashboard && (
-                <Button 
-                  variant="outline" 
-                  className="border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white"
-                  onClick={handleDashboardClick}
-                >
-                  Dashboard
-                </Button>
+              {!isDashboard && !isProjectsPage && (
+                <>
+                  <Button 
+                    variant="outline" 
+                    className="border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white"
+                    onClick={handleDashboardClick}
+                  >
+                    Dashboard
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white"
+                    asChild
+                  >
+                    <Link to="/projects">Projects</Link>
+                  </Button>
+                </>
               )}
               <Button 
                 variant="outline" 
@@ -178,14 +222,34 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden bg-white border-b border-gray-100">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {isDashboard ? (
-              <Link
-                to="/"
-                className="block px-3 py-2 text-base font-medium text-thryve-blue hover:bg-gray-50 rounded-md"
-                onClick={() => setIsOpen(false)}
-              >
-                Home
-              </Link>
+            {isDashboard || isProjectsPage ? (
+              <>
+                <Link
+                  to="/"
+                  className="block px-3 py-2 text-base font-medium text-thryve-blue hover:bg-gray-50 rounded-md"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Home
+                </Link>
+                {user && (
+                  <>
+                    <Link
+                      to="/dashboard"
+                      className="block px-3 py-2 text-base font-medium text-thryve-blue hover:bg-gray-50 rounded-md"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Dashboard
+                    </Link>
+                    <Link
+                      to="/projects"
+                      className="block px-3 py-2 text-base font-medium text-thryve-blue hover:bg-gray-50 rounded-md"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Projects
+                    </Link>
+                  </>
+                )}
+              </>
             ) : (
               <>
                 <a
@@ -228,6 +292,24 @@ const Navbar = () => {
                 >
                   Contact
                 </a>
+                {user && (
+                  <>
+                    <Link
+                      to="/dashboard"
+                      className="block px-3 py-2 text-base font-medium text-thryve-blue hover:bg-gray-50 rounded-md"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Dashboard
+                    </Link>
+                    <Link
+                      to="/projects"
+                      className="block px-3 py-2 text-base font-medium text-thryve-blue hover:bg-gray-50 rounded-md"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Projects
+                    </Link>
+                  </>
+                )}
               </>
             )}
           </div>
@@ -236,13 +318,22 @@ const Navbar = () => {
               <div className="flex-shrink-0">
                 {user ? (
                   <div className="space-y-2 w-full">
-                    {!isDashboard && (
-                      <Button 
-                        className="w-full bg-thryve-teal hover:bg-thryve-teal/90 text-white"
-                        onClick={handleDashboardClick}
-                      >
-                        Dashboard
-                      </Button>
+                    {!isDashboard && !isProjectsPage && (
+                      <>
+                        <Button 
+                          className="w-full bg-thryve-teal hover:bg-thryve-teal/90 text-white"
+                          onClick={handleDashboardClick}
+                        >
+                          Dashboard
+                        </Button>
+                        <Button 
+                          variant="outline"
+                          className="w-full border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white"
+                          asChild
+                        >
+                          <Link to="/projects">Projects</Link>
+                        </Button>
+                      </>
                     )}
                     <Button 
                       variant="outline"
