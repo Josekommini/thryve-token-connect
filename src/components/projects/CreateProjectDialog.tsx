@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -19,6 +18,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { toast } from 'sonner';
+import type { Database } from '@/integrations/supabase/types';
 
 const formSchema = z.object({
   title: z.string().min(1, 'Title is required').max(100, 'Title must be less than 100 characters'),
@@ -56,7 +56,7 @@ const CreateProjectDialog = ({ open, onOpenChange, onProjectCreated }: CreatePro
     console.log('Creating project with values:', values);
 
     try {
-      const projectData = {
+      const projectData: Database['public']['Tables']['projects']['Insert'] = {
         client_id: user.id,
         title: values.title,
         description: values.description,
@@ -67,12 +67,12 @@ const CreateProjectDialog = ({ open, onOpenChange, onProjectCreated }: CreatePro
           ? values.required_skills.split(',').map(skill => skill.trim()).filter(Boolean)
           : [],
         experience_level: values.experience_level,
-        status: 'open',
+        status: 'open' as Database['public']['Enums']['project_status'],
       };
 
       const { error } = await supabase
         .from('projects')
-        .insert([projectData]);
+        .insert(projectData);
 
       if (error) {
         console.error('Error creating project:', error);

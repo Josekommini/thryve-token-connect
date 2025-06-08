@@ -18,6 +18,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { toast } from 'sonner';
+import type { Database } from '@/integrations/supabase/types';
 
 const formSchema = z.object({
   cover_letter: z.string().min(50, 'Cover letter must be at least 50 characters'),
@@ -51,18 +52,18 @@ const CreateProposalDialog = ({ open, onOpenChange, projectId, onProposalSubmitt
     console.log('Creating proposal with values:', values);
 
     try {
-      const proposalData = {
+      const proposalData: Database['public']['Tables']['proposals']['Insert'] = {
         project_id: projectId,
         freelancer_id: user.id,
         cover_letter: values.cover_letter,
         proposed_rate: Math.round(values.proposed_rate * 100), // Convert to cents
         estimated_duration: values.estimated_duration || null,
-        status: 'pending',
+        status: 'pending' as Database['public']['Enums']['proposal_status'],
       };
 
       const { error } = await supabase
         .from('proposals')
-        .insert([proposalData]);
+        .insert(proposalData);
 
       if (error) {
         console.error('Error creating proposal:', error);
