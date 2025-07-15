@@ -63,14 +63,16 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				thryve: {
-					blue: '#1A2B4C',
-					darkblue: '#0F172A',
-					teal: '#0CABA8',
-					gold: '#E6B656',
-					purple: '#7B61FF',
-					gray: '#F7F8F9',
-					charcoal: '#343A40'
+				azuki: {
+					red: 'hsl(350, 100%, 65%)',
+					orange: 'hsl(24, 100%, 50%)',
+					dark: 'hsl(220, 26%, 8%)',
+					darker: 'hsl(220, 24%, 6%)',
+					card: 'hsl(220, 24%, 10%)',
+					muted: 'hsl(220, 20%, 14%)',
+					accent: 'hsl(350, 100%, 65%)',
+					text: 'hsl(0, 0%, 95%)',
+					'text-muted': 'hsl(0, 0%, 65%)'
 				}
 			},
 			borderRadius: {
@@ -96,7 +98,7 @@ export default {
 					}
 				},
 				'fade-in': {
-					'0%': { opacity: '0', transform: 'translateY(10px)' },
+					'0%': { opacity: '0', transform: 'translateY(20px)' },
 					'100%': { opacity: '1', transform: 'translateY(0)' }
 				},
 				'fade-out': {
@@ -106,14 +108,29 @@ export default {
 				'slide-in': {
 					'0%': { transform: 'translateX(-100%)' },
 					'100%': { transform: 'translateX(0)' }
+				},
+				'glow': {
+					'0%, 100%': { boxShadow: '0 0 20px hsl(350 100% 65% / 0.3)' },
+					'50%': { boxShadow: '0 0 40px hsl(350 100% 65% / 0.6)' }
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0px)' },
+					'50%': { transform: 'translateY(-10px)' }
+				},
+				'pulse-neon': {
+					'0%, 100%': { textShadow: '0 0 5px hsl(350 100% 65% / 0.5)' },
+					'50%': { textShadow: '0 0 20px hsl(350 100% 65% / 0.8)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'fade-in': 'fade-in 0.5s ease-out forwards',
+				'fade-in': 'fade-in 0.8s ease-out forwards',
 				'fade-out': 'fade-out 0.5s ease-out forwards',
-				'slide-in': 'slide-in 0.5s ease-out forwards'
+				'slide-in': 'slide-in 0.5s ease-out forwards',
+				'glow': 'glow 2s ease-in-out infinite',
+				'float': 'float 3s ease-in-out infinite',
+				'pulse-neon': 'pulse-neon 2s ease-in-out infinite'
 			}
 		}
 	},

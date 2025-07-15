@@ -7,35 +7,43 @@
 
 @layer base {
   :root {
-    --background: 210 50% 98%;
-    --foreground: 222 47% 11%;
+    /* Dark theme inspired by Azuki */
+    --background: 220 26% 8%;
+    --foreground: 0 0% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card: 220 24% 10%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover: 220 24% 10%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 222 84% 20%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 350 100% 65%;
+    --primary-foreground: 0 0% 95%;
 
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 220 20% 14%;
+    --secondary-foreground: 0 0% 85%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 220 20% 14%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 175 87% 36%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 24 100% 50%;
+    --accent-foreground: 220 26% 8%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 95%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 222 84% 20%;
+    --border: 220 20% 20%;
+    --input: 220 20% 18%;
+    --ring: 350 100% 65%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Azuki-inspired design tokens */
+    --gradient-primary: linear-gradient(135deg, hsl(350 100% 65%), hsl(24 100% 50%));
+    --gradient-dark: linear-gradient(180deg, hsl(220 26% 8%), hsl(220 24% 12%));
+    --shadow-neon: 0 0 40px hsl(350 100% 65% / 0.3);
+    --shadow-soft: 0 8px 32px hsl(220 26% 4% / 0.6);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   * {
@@ -46,6 +54,8 @@
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', sans-serif;
     scroll-behavior: smooth;
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -53,32 +63,67 @@
     @apply font-semibold;
   }
 
-  /* Custom utility classes */
+  /* Azuki-inspired utility classes */
   .container-custom {
     @apply container mx-auto px-4 lg:px-8 max-w-7xl;
   }
   
   .btn-primary {
-    @apply bg-thryve-teal hover:bg-opacity-90 text-white font-medium rounded-md px-8 py-3 transition-all shadow-md hover:shadow-lg;
+    background: var(--gradient-primary);
+    @apply text-white font-semibold rounded-xl px-8 py-3 shadow-lg hover:shadow-xl border-0;
+    transition: var(--transition-smooth);
+    transform: translateY(0);
+  }
+  
+  .btn-primary:hover {
+    box-shadow: var(--shadow-neon);
+    transform: translateY(-2px);
   }
   
   .btn-secondary {
-    @apply bg-transparent border border-thryve-teal text-thryve-teal hover:bg-thryve-teal hover:bg-opacity-10 font-medium rounded-md px-8 py-3 transition-all;
+    @apply bg-card/50 backdrop-blur-md border border-primary/30 text-primary hover:bg-primary/10 font-semibold rounded-xl px-8 py-3;
+    transition: var(--transition-smooth);
   }
   
   .glass-effect {
-    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-md;
+    @apply bg-card/30 backdrop-blur-xl border border-white/10;
+    box-shadow: var(--shadow-soft);
   }
   
   .section-padding {
-    @apply py-16 md:py-24;
+    @apply py-20 md:py-32;
   }
   
   .service-card {
-    @apply bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100;
+    @apply bg-card/50 backdrop-blur-md rounded-2xl p-8 border border-white/10 hover:border-primary/30;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .service-card:hover {
+    box-shadow: var(--shadow-neon);
+    transform: translateY(-4px);
   }
   
   .portfolio-card {
-    @apply bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300;
+    @apply bg-card/50 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 hover:border-primary/30;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .portfolio-card:hover {
+    box-shadow: var(--shadow-neon);
+    transform: translateY(-4px);
+  }
+  
+  .neon-text {
+    text-shadow: 0 0 20px hsl(350 100% 65% / 0.5);
+  }
+  
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }

@@ -51,28 +51,28 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
-      <div className="container-custom flex items-center justify-between h-16">
+    <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-white/10 shadow-2xl">
+      <div className="container-custom flex items-center justify-between h-20">
         {/* Logo */}
         <div className="flex-shrink-0">
           <Link 
             to="/"
-            className="flex items-center"
+            className="flex items-center group"
           >
-            <h1 className="text-2xl font-bold text-thryve-blue">
-              Thryve<span className="text-thryve-teal">.</span>
+            <h1 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
+              Thryve<span className="gradient-text">.</span>
             </h1>
           </Link>
         </div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:block">
-          <div className="ml-10 flex items-center space-x-8">
+          <div className="ml-10 flex items-center space-x-10">
             {isDashboard || isProjectsPage ? (
               <>
                 <Link 
                   to="/" 
-                  className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
+                  className="text-muted-foreground hover:text-primary font-medium transition-all hover:scale-110"
                 >
                   Home
                 </Link>
@@ -80,13 +80,13 @@ const Navbar = () => {
                   <>
                     <Link 
                       to="/dashboard" 
-                      className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
+                      className="text-muted-foreground hover:text-primary font-medium transition-all hover:scale-110"
                     >
                       Dashboard
                     </Link>
                     <Link 
                       to="/projects" 
-                      className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
+                      className="text-muted-foreground hover:text-primary font-medium transition-all hover:scale-110"
                     >
                       Projects
                     </Link>
@@ -97,55 +97,59 @@ const Navbar = () => {
               <>
                 <a 
                   href="#services" 
-                  className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
+                  className="text-muted-foreground hover:text-primary font-medium transition-all hover:scale-110 relative group"
                   onClick={(e) => {
                     e.preventDefault();
                     handleNavLinkClick('services');
                   }}
                 >
                   Services
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
                 </a>
                 <a 
                   href="#portfolio" 
-                  className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
+                  className="text-muted-foreground hover:text-primary font-medium transition-all hover:scale-110 relative group"
                   onClick={(e) => {
                     e.preventDefault();
                     handleNavLinkClick('portfolio');
                   }}
                 >
                   Portfolio
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
                 </a>
                 <a 
                   href="#token-system" 
-                  className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
+                  className="text-muted-foreground hover:text-primary font-medium transition-all hover:scale-110 relative group"
                   onClick={(e) => {
                     e.preventDefault();
                     handleNavLinkClick('token-system');
                   }}
                 >
                   Token System
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
                 </a>
                 <a 
                   href="#contact" 
-                  className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
+                  className="text-muted-foreground hover:text-primary font-medium transition-all hover:scale-110 relative group"
                   onClick={(e) => {
                     e.preventDefault();
                     handleNavLinkClick('contact');
                   }}
                 >
                   Contact
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
                 </a>
                 {user && (
                   <>
                     <Link 
                       to="/dashboard" 
-                      className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
+                      className="text-muted-foreground hover:text-primary font-medium transition-all hover:scale-110"
                     >
                       Dashboard
                     </Link>
                     <Link 
                       to="/projects" 
-                      className="text-thryve-blue hover:text-thryve-teal font-medium transition-colors"
+                      className="text-muted-foreground hover:text-primary font-medium transition-all hover:scale-110"
                     >
                       Projects
                     </Link>
@@ -164,14 +168,14 @@ const Navbar = () => {
                 <>
                   <Button 
                     variant="outline" 
-                    className="border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white"
+                    className="border-primary/30 text-primary hover:bg-primary/10 hover:border-primary bg-transparent rounded-xl"
                     onClick={handleDashboardClick}
                   >
                     Dashboard
                   </Button>
                   <Button 
                     variant="outline" 
-                    className="border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white"
+                    className="border-primary/30 text-primary hover:bg-primary/10 hover:border-primary bg-transparent rounded-xl"
                     asChild
                   >
                     <Link to="/projects">Projects</Link>
@@ -180,7 +184,7 @@ const Navbar = () => {
               )}
               <Button 
                 variant="outline" 
-                className="border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white"
+                className="border-primary/30 text-primary hover:bg-primary/10 hover:border-primary bg-transparent rounded-xl"
                 onClick={handleLogoutClick}
                 disabled={loading}
               >
@@ -191,13 +195,13 @@ const Navbar = () => {
             <>
               <Button 
                 variant="outline" 
-                className="border-thryve-blue text-thryve-blue hover:bg-thryve-blue hover:text-white"
+                className="border-primary/30 text-primary hover:bg-primary/10 hover:border-primary bg-transparent rounded-xl"
                 onClick={handleLoginClick}
               >
                 Login
               </Button>
               <Button 
-                className="bg-thryve-teal hover:bg-thryve-teal/90 text-white"
+                className="btn-primary"
                 onClick={handleDashboardClick}
               >
                 Get Started
@@ -210,7 +214,7 @@ const Navbar = () => {
         <div className="md:hidden">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="inline-flex items-center justify-center p-2 rounded-md text-thryve-blue focus:outline-none"
+            className="inline-flex items-center justify-center p-3 rounded-xl text-primary hover:bg-primary/10 focus:outline-none transition-colors"
           >
             <span className="sr-only">Open main menu</span>
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -220,8 +224,8 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white border-b border-gray-100">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <div className="md:hidden bg-card/95 backdrop-blur-xl border-b border-white/10">
+          <div className="px-4 pt-4 pb-4 space-y-2 sm:px-6">
             {isDashboard || isProjectsPage ? (
               <>
                 <Link
